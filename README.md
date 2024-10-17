@@ -29,9 +29,11 @@ This project is a mental health chatbot that allows users to chat with the bot, 
    pip install -r requirements.txt
    python manage.py runserver
 
-### Chatbot Interface
+## Screenshots
 
-![Chatbot Interface] (https://raw.githubusercontent.com/codermilind-op/Mental_Health_Chatbot/refs/heads/main/Screenshot%202024-10-17%20111415.png)
+### Chatbot Interface
+![Chatbot Interface](https://raw.githubusercontent.com/codermilind-op/Mental_Health_Chatbot/refs/heads/main/Screenshot%202024-10-17%20111415.png)
+
 
 
    
