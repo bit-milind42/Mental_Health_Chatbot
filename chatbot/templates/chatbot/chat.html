@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MannMitra </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e5ddd5; /* Light background */
+            margin: 0;
+            padding: 20px;
+            display: flex; /* Use flexbox to center */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Full viewport height */
+        }
+        .chat-container {
+            box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            width: 440px;
+            height: 634px;
+        }
+        .chat-header {
+            font-weight: bold;
+            font-size: 1.125rem; /* text-lg */
+            margin-bottom: 1rem; /* Adjusted for spacing */
+        }
+        .chat-messages {
+            height: 474px; /* Adjusted height */
+            overflow-y: auto; /* Scrollable */
+            padding-right: 1rem; /* pr-4 */
+        }
+        .message {
+            display: flex;
+            gap: 0.75rem; /* gap-3 */
+            margin-top: 1rem; /* my-4 */
+            color: #4b5563; /* text-gray-600 */
+        }
+        .user-message {
+            justify-content: flex-end; /* Align to right */
+        }
+        .ai-message {
+            justify-content: flex-start; /* Align to left */
+        }
+        .message-bubble {
+            border-radius: 8px; /* Rounded corners */
+            padding: 0.5rem; /* Increased padding for better appearance */
+            max-width: 70%; /* Limit width */
+        }
+        .user-message .message-bubble {
+            background-color: #f1f0f0; /* Light gray for user messages */
+            color: black; /* Text color for user messages */
+        }
+        .ai-message .message-bubble {
+            background-color: #ffffff; /* White for bot messages */
+            color: black; /* Text color for bot messages */
+        }
+        .input-container {
+            display: flex;
+            align-items: center;
+            margin-top: auto; /* Push input to the bottom */
+        }
+        input[type="text"] {
+            flex-grow: 1; /* Take remaining space */
+            height: 40px; /* h-10 */
+            border-radius: 8px; /* rounded-md */
+            border: 1px solid #e5e7eb; /* Border color */
+            padding-left: 10px; /* Padding for input */
+        }
+        button {
+            height: 40px; /* h-10 */
+            border-radius: 8px; /* rounded-md */
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chat-header">MannMitra</div> <!-- Updated Header -->
+    <div class="chat-messages" id="chat"></div>
+    <div class="typing-indicator" id="typing-indicator" style="display:none;">Bot is typing...</div>
+
+    <!-- Input container -->
+    <div class="input-container">
+      <input id="user-input" type="text" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+    async function sendMessage() {
+        const inputField = document.getElementById('user-input');
+        const userMessage = inputField.value;
+
+        // Check if the input is empty
+        if (!userMessage.trim()) return;
+
+        // Display user's message
+        const userMessageDiv = document.createElement('div');
+        userMessageDiv.className = 'message user-message';
+
+        userMessageDiv.innerHTML = `
+          <p class="message-bubble"><span class="block font-bold text-gray-700">You:</span> ${userMessage}</p>`;
+
+        document.getElementById('chat').appendChild(userMessageDiv);
+
+        // Clear input field
+        inputField.value = '';
+
+        // Show typing indicator
+        const typingIndicator = document.getElementById('typing-indicator');
+        typingIndicator.style.display = 'block';
+
+        // Simulate a delay for bot response
+        setTimeout(async () => {
+           const response = await fetch('/api/chat/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userMessage }),
+           });
+
+           const data = await response.json();
+
+           // Hide typing indicator
+           typingIndicator.style.display = 'none';
+
+           // Display bot's response
+           const botMessageDiv = document.createElement('div');
+           botMessageDiv.className = 'message ai-message';
+
+           botMessageDiv.innerHTML = `
+             <p class="message-bubble"><span class='block font-bold text-gray-700'>MannMitra:</span> ${data.response}</p>`; <!-- Updated Bot Label -->
+
+           document.getElementById('chat').appendChild(botMessageDiv);
+
+           // Scroll to the bottom of the chat
+           document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+
+       }, 1000); // Simulated delay of one second
+   }
+</script>
+
+</body>
+</html>
+
+
+
+
