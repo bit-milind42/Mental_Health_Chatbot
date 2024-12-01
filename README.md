@@ -32,8 +32,8 @@ This project is a mental health chatbot that allows users to chat with the bot, 
 ## Screenshots
 
 ### Chatbot Interface
-![Chatbot Interface](https://raw.githubusercontent.com/codermilind-op/Mental_Health_Chatbot/refs/heads/main/Screenshot%202024-10-17%20111415.png)
-![Chatbot Interface](https://raw.githubusercontent.com/codermilind-op/Mental_Health_Chatbot/refs/heads/main/Screenshot%202024-10-17%20111444.png)
+![Chatbot Interface](https://raw.githubusercontent.com/bit-milind42/Mental_Health_Chatbot/refs/heads/main/Screenshot%202024-12-01%20203018.png)
+
 
 
 
